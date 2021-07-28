@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 1.스프링설정 파일로 추가 -->
+	<!-- mvc모듈이 필요( namespace에서 mvc모듈 체크) -->
+	<!-- 인터셉터 클래스를 bean으로 생성 -->
+	
+	<bean id="userAuthHandler" class="com.team404.util.interceptor.UserAuthHandler"/>
+	<bean id="boardAuthHandler" class="com.team404.util.interceptor.BoardAuthHandler"/>
+	<bean id="loginSuccessHandler" class="com.team404.util.interceptor.LoginSuccessHandler"/>
+	
+	
+	<mvc:interceptors>
+		<!-- 유저권한을 가진 사용자만 사용할 수 있는 권한 핸들러 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/user/userMypage"/> <!-- 마이페이지 -->
+			<mvc:mapping path="/freeBoard/freeRegist"/> <!-- 글등록화면 -->
+			<ref bean="userAuthHandler"/> <!-- 위에서 만든 userAuthHandler실행 -->
+		</mvc:interceptor>
+	
+		<!-- 게시글 수정,삭제,변경에 대한 권한 핸들러 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/freeBoard/freeModify"/>
+			<mvc:mapping path="/freeBoard/freeUpdate"/>
+			<mvc:mapping path="/freeBoard/freeDelete"/>
+			<ref bean="boardAuthHandler"/>
+		</mvc:interceptor>
+	
+		<!-- 로그인 이후에 실행되는 핸들러 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/user/loginForm"/>
+			<ref bean="loginSuccessHandler"/>
+		</mvc:interceptor>
+	
+	
+	
+	</mvc:interceptors>
+
+
+
+
+</beans>

@@ -1,0 +1,45 @@
+## 주석 (마이에스큐엘 테이블 대소문자 구분)
+create table FREEBOARD(
+    bno int(10) PRIMARY KEY auto_increment,
+    title varchar(200) not null,
+    writer varchar(200) not null,
+    content varchar(2000) not null,
+    regdate datetime default current_timestamp,
+    updatedate datetime default current_timestamp
+);
+
+##댓글테이블
+create table FREEREPLY(
+    rno int(10) PRIMARY KEY auto_increment,
+    bno int(10), 
+    reply varchar(1000), 
+    replyId varchar(200), 
+    replyPw varchar(200), 
+    replyDate datetime default current_timestamp, 
+    updateDate datetime default current_timestamp 
+);
+
+##회원
+create table USERS(
+    userId varchar(50) primary key,
+    userPw varchar(50) not null,
+    userName varchar(50) not null,
+    userEmail1 varchar(50),
+    userEmail2 varchar(50),
+    addrZipNum varchar(50),
+    addrBasic varchar(300),
+    addrDetail varchar(300),
+    regdate datetime default current_timestamp
+);
+
+## 이미지게시판
+create table SNSBOARD(
+    bno int(10) primary key auto_increment,
+    writer varchar(50) not null,
+    content varchar(2000),
+    uploadpath varchar(100) not null, 
+    fileloca varchar(100) not null, 
+    filename varchar(100) not null, 
+    filerealname varchar(100) not null, 
+    regdate datetime default current_timestamp
+);
